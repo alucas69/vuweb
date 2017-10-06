@@ -1,4 +1,5 @@
 # vuweb
 vu web!
 
-This is the vu website
+This is the vu website.
+
