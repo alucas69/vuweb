@@ -97,7 +97,7 @@ and with realized measures as inputs \citep{delirasalvatierrapatton2015,opschoor
 Despite the impressive wide range of new models with score-driven dynamics, 
 %hardly any theoretical results are available 
 there are not many theoretical results presented
-for the estimators of the underlying static parameters in such models. The main complication lies in the non-linearity of the stochastic recurrence equations defining score-driven models. Therefore, in this paper we make a first important step to fill this gap by deriving new asymptotic results for parameter estimation in the class of score-driven models. In contrast to most of the literature, we have chosen to derive such results in the global rather than in the simpler local setting, while building on low-level rather than high-level conditions.
+for the estimators of the underlying static parameters in such models. The main complication lies in the non-linearity of the stochastic recurrence equations defining score-driven models. Therefore, in this paper we make a first important step to fill this gap by deriving new global asymptotic results for parameter estimation in the class of score-driven models.
 
 %that are known respectively as generalized autoregressive score-driven models or dynamic conditional score-driven models. 
 %We let the general class of score-driven nonlinear time series models be defined by
@@ -128,7 +128,6 @@ $\domega$, $\dalpha$, and $\dbeta$, are gathered in the
 parameter vector
 $\dtheta=(\domega,\dalpha,\dbeta, \dlambda\trans)\trans$ with $\trans$ denoting transposition.
 
-A distinguishing feature of the model in \eqref{intro2} is the use of the scaled score $\fScaledScoret$ in the transition equation for $\dFt$.
 A popular example of a score-driven model is the Student's $t$ conditional volatility model, given by 
 \bq{intro2b}
 \begin{split}
@@ -257,7 +256,7 @@ Section~\ref{sec4} proves global identification, consistency, and asympotic norm
 %In Section~\ref{sec5}, we analyze examples using the theory developed in Sections \ref{sec3} and \ref{sec4}.
 Section~\ref{sec7} concludes. 
 The proofs of the main theorems are gathered in the Appendix. 
-More technical background material is relegated to the online \SupplementaryAppendix\ (\SupplementaryAppendixAbbrev).
+More technical auxiliary propositions and lemmas are provided in an online \SupplementaryAppendix\ (\SupplementaryAppendixAbbrev).
 
 
 %--------------------------------------------------------------
@@ -279,15 +278,11 @@ consider a score-driven time-varying location model of the form
 \begin{align}
     \label{eq2.1}
     \dDatat &= \dFt + \ept,
-%    \qquad
-    &
-    \ept &\sim \fDensEp(\ept; \dlambda),
+    \qquad
+    \ept \sim \fDensEp(\ept; \dlambda),
     \\
     \label{eq2.2}
-    \dFtp &= \domega + \dalpha \fScoret + \dbeta\dFt,
-%    \qquad  
-    &
-    \fScoret &=\frac{\partial \NatLog \fDensEp(\dDatat - \dFt; \dlambda)}{\partial\dFt}
+    \dFtp &= \domega + \dalpha \fScoret + \dbeta\dFt, \quad \text{with} \quad  \fScoret = \frac{\partial \NatLog \fDensEp(\dDatat - \dFt; \dlambda)}{\partial\dFt}
 \end{align}
 where $\dFt$ is the time-varying location parameter, $\NatLog$ denotes the natural logarithm, and $\fDensEp$ is the error density that depends on an unknown, static parameter vector $\dlambda$. 
 For simplicity, we have set the scaling function from equation~\eqref{intro2} in this example to $\fScale(\dFt; \dlambda) = 1$.
@@ -301,7 +296,7 @@ If $\fDensEp$ in equation \eqref{eq2.1} is the normal distribution with mean zer
 \[
 	\dFtp = \domega + \dalpha\,\dlambda^{-1}(\dDatat - \dFt) + \dbeta\,\dFt.
 \] 
-The location $\dFtp$ then moves linearly up and down with the previous residual value $\dDatat - \dFt$ in an intuitive way. In fact, model \eqref{eq2.1}--\eqref{eq2.2} can be re-written as a standard linear autoregressive moving average (ARMA) model for $\dDatat$ of order $(1,1)$ with autoregressive coefficient $\dbeta$ and moving average coefficient $(\dalpha \, / \, \dlambda)-\dbeta$.
+The location $\dFtp$ then moves linearly up and down with the previous residual value $\dDatat - \dFt$ in an intuitive way. In fact, model \eqref{eq2.1}--\eqref{eq2.2} can then be written as a standard linear autoregressive moving average (ARMA) model for $\dDatat$ of order $(1,1)$ with autoregressive coefficient $\dbeta$ and moving average coefficient $(\dalpha \, / \, \dlambda)-\dbeta$.
 
 The score-driven model becomes more interesting if we consider a non-normal distribution, such as a Student's $t$ distribution; see \citet{CKL2013} and \citet{harveyluati2014}. In this case, the score-driven model gives rise to an outlier robust filtering approach. Consider a Student's $t$ distribution with mean zero, squared scale parameter $\dlambda_1$ and degrees of freedom parameter $\dlambda_2$. Equation \eqref{eq2.2} then reduces to
 \bq{eq2.3}
@@ -316,26 +311,22 @@ The score-driven model becomes more interesting if we consider a non-normal dist
     ,
 \eq
 such that the location parameter $\dFtp$ now reacts nonlinearly to past values of $\dFt$ for fixed data $\dDatat$. 
-For example, whereas a large residual $(\dDatat-\dFt)$ pushes the next location parameter $\dFtp$ substantially up if the normal distribution is assumed ($\dlambda_2\to\infty$), under the Student's $t$ assumption the impact of such a large residual is of order $(\dDatat-\dFt)^{-1}$. The impact on $\dFtp$ therefore becomes negligible as $(\dDatat-\dFt)$ diverges. The intuition is that such observations are more likely due to the fat-tailedness property of the Student's $t$ distribution than that they are informative about gradual shifts in the location parameter.
+For example, whereas a large residual $(\dDatat-\dFt)$ pushes the next location parameter $\dFtp$ substantially up if the normal distribution is assumed ($\dlambda_2\to\infty$), under the Student's $t$ assumption the impact of such a large residual is of order $(\dDatat-\dFt)^{-1}$. The impact on $\dFtp$ therefore becomes negligible as $(\dDatat-\dFt)$ diverges.
 
 %\textcolor{gray}{The asymptotic results derived in \citet{harveyluati2014} are local in nature and specific for the Student's $t$ location-scale model.
 %For example, if we go beyond the context of the Student's $t$ distribution and introduce a skewed distribution for $\fDensEp$, new results need to be derived. Such extensions arise easily in scale models with a measurement equation of a multiplicative form and are illustrated below.}
 %\andresays{a daring paragraph; rewrite to make less offensive; also: is it really true? maybe kill whole paragraph?}
 
-To elucidate on how the theory as developed in this paper may be applied to a realistic case, we adopt the leading example of a score-driven time-varying volatility model of \citet{CKL2011,CKL2013}. By providing the details for this example, we keep the exposition focused.
+To elucidate on how the theory as developed in this paper may be applied to a realistic case, we adopt the leading example of a score-driven time-varying volatility model. By providing the details for this example, we keep the exposition focused.
 %This helps to keep the exposition focused. 
 The application of the theory is, however, not limited to this particular case. 
-%In \SupplementaryAppendix\ \ref{FurtherApplications}, we provide a 
-A substantial range of additional illustrations of the theory can be provided, including 
-robust time-varying location models with skewed distributions; 
-conditional volatility models for log volatility; 
-extensions of  conditional duration (ACD) models of \cite{EngleRussell1998},  \cite{grammigmaurer2000}, \cite{bauwensgiot2000},  and \citet{klsch2015} that allow for fat-tailed densities;
-and time-varying location models with non-linear transformations of the location parameter, thus extending examples studied by \citet{harvey2013} and \citet{harveyluati2014}. 
-%Together, the illustrations provide a variety of settings where the results of this paper can be applied successfully. 
+In \SupplementaryAppendix\ \ref{FurtherApplications}, we provide a substantial range of additional illustrations of the theory, including robust time-varying location models with skewed distributions, conditional volatility models for log volatility, conditional duration with fat-tailed densities, and time-varying location models with non-linear transformations of the location parameter. 
+These location models are similar to those studied by \citet{harvey2013} and \citet{harveyluati2014}, but allow for non-linear transformations and asymmetric distributions. The illustrations show the effects of the theory on the asymptotic properties of the MLE. For time series of durations, we consider score-driven alternatives to the autoregressive conditional duration (ACD) models of \cite{EngleRussell1998},  \cite{grammigmaurer2000}, \cite{bauwensgiot2000},  and \citet{klsch2015}.
+Together, the illustrations provide a variety of settings where the results of this paper can be applied successfully. 
 % 
 %
 %We now introduce our leading example. In particular, t
-%The main example in the paper provides the asymptotic results for the robust and empirically successful univariate volatility models of \citet{CKL2011,CKL2013}. 
+The main example in the paper provides the asymptotic results for the robust and empirically successful univariate volatility models of \citet{CKL2011,CKL2013}. 
 
 \begin{exmcstart} %\rm
 Consider the conditional Student's $t$ model with time varying volatility as given by
@@ -350,10 +341,10 @@ Consider the conditional Student's $t$ model with time varying volatility as giv
 \end{split}
 \eq
 where $\{\ept\}_{t \in \mathbb{Z}}$ is a sequence of independent identically distributed random variables from the Student's $t$ distribution with $\dlambda$ degrees of freedom.
-We ensure positivity of the scale $\dFt$ by imposing $\dbeta>\dalpha>0$, $\domega>0$, and $\dFoneFixed>0$, where $\dFoneFixed$ is the initial condition for $\dFt$ at time $\iTime=1$.
-The raw score is scaled by a factor proportional to the inverse conditional Fisher information as suggested by \citet{CKL2013}, to account for the local curvature of predictive density at time $\iTime$,
+We ensure positivity of the scale by imposing $\dbeta>\dalpha>0$, $\domega>0$, and $\dFoneFixed>0$.
+The score is scaled by a factor proportional to the inverse conditional Fisher information as suggested by \citet{CKL2013}, to account for the local curvature of predictive density at time $\iTime$,
 i.e.,  $\fScale(\dFt; \dlambda) = 2\dFt^2$.
-For the Gaussian case ($\dlambda\to\infty$) we recover a slightly reparameterized version of the standard GARCH model, $\dFtp = \domega + \dalpha\dDatat^2 + (\dbeta - \dalpha)\dFt$.
+For the Gaussian case, $\dlambda\to\infty$ and we recover a slightly reparameterized version of the standard GARCH model.
 \end{exmcstart}
 
 Figure \ref{fig:TGAS} provides a typical illustration of the difference between the GARCH dynamics and the score-driven dynamics in \eqref{eq2.4}. Large spikes in $\dDatat^2$, particularly incidental ones such as those at the end of 1987 and 1989, result in a spike in the GARCH volatility, followed by a slow exponential decline. By contrast, the filtered volatility estimate obtained from the Student's $t$ based score-driven dynamics recognizes that the large negative return in 1989 is incidental and is probably due to the fat-tailedness of the data. Similarly for the turmoil at the end of 1987, both volatilities increase, but again the score-driven filtered estimate is considerably more robust and does not exhibit the subsequent non-intuitive strong exponential decline. 
@@ -373,8 +364,8 @@ The intuition for the behavior of the score filter is simple. Consider a large o
 If we assume that tail observations are unlikely because $\dDatat$ is conditionally Gaussian, a large value of $\dDatat$ must be attributed to a (steep) volatility increase.
 If, however, we assume that data are conditionally fat-tailed, part of the magnitude of $\dDatat$ can be attributed to the fat-tails. As a result, the volatility needs to be increased much less dramatically.
 This is precisely what the score-driven approach attains in this case.
-The GARCH dynamics do not account for this: whatever the degree of conditional fat-tailedness, the next volatility level always responds quadratically to any observation $\dDatat$. 
-The score-driven dynamics, by contrast, incorporates the trade-off by down-weighting the impact of a large $\dDatat^2$ automatically; see \citet{CKL2011,CKL2013} for more discussions and examples.
+The GARCH dynamics do not account for this: whatever the degree of conditional fat-tailedness, the next volatility level always responds quadratically for all observations $\dDatat$. 
+The score-driven dynamics, by contrast, incorporates the trade-off by down weighting the impact of a large $\dDatat^2$ automatically; see \citet{CKL2011,CKL2013} for more discussions and examples.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -434,7 +425,7 @@ and write %$\ept$ and
 $\dFt$ instead. % , respectively. 
 
 \begin{exmc} %\rm
-For the time-varying volatilty model of Section \ref{sec2.1}, the link function $\fLink$ in \eqref{measurement} simplifies to $\fLink(\dFt,\ept) = \dFt^{1/2}\cdot\ept$, which is strictly increasing in $\ept$ if $\dFt>0$.
+For the time-varying volatilty model of Section \ref{sec2.1}, the link function $\fLink$ in \eqref{measurement} simplifies to $\fLink(\dFt,\ept) = \dFt^{1/2}\cdot\ept$.
 For a location model, the link function is additive.
 Depending on the application the link function may also be much more complex, such as for the Beta distribution with time-varying parameters in \citet{cskl2014}.
 \end{exmc}
@@ -547,7 +538,7 @@ Finally, we use $\dXt \perp \dXt'$ to denote independence between $\dXt$ and $\d
 
 Propositions \ref{prop2} and \ref{prop4} below are written specifically for the score-driven recursion \eqref{eqgasupdate}. 
 The propositions can, however, be extended to more general forms which can be found in \SupplementaryAppendix~\ref{AppTechnicalLemmas}. 
-First, we consider the score-driven model defined in terms of the error terms $\ept$ rather than in terms of the observations $\dDatat$.
+Here we consider the score-driven model defined in terms of the error terms $\ept$ rather than in terms of the observations $\dDatat$.
 This enables us to establish explicit results for the score-driven model as a potential data generating process and  to derive properties for the MLE under the assumption of a correctly specified model.
 Define 
 $\fScaledScoreU(\dFut,\ept;\dlambda) := \fScaledScore (\dFut,\fLink(\dFut,\ept);\dlambda)$ and let  
@@ -618,7 +609,7 @@ If furthermore for every $\dtheta \in \fTheta\ \exists \ \ndFfin  > 0$ such that
 then 
 $\sup_{\iTime} \Ee| \dFut(\eplSuptm\supcomma\dtheta,\dFoneFixed) |^{\ndFfin} < \infty$
 and  
-$\Ee|\dFut(\eplASuptm\supcomma\dtheta)|^{\ndF} < \infty \ \forall \ \dtheta \in \fTheta$ and $\ndF\in[0,\ndFfin)$.
+$\Ee|\dFut(\eplASuptm\supcomma\dtheta)|^{\ndF-\ddelta} < \infty \ \forall \ \dtheta \in \fTheta$ and any $\ndF<\ndFfin$.
 \end{prop}
 
 Proposition \ref{prop2} not only establishes stationarity and ergodicity (SE) of $\dFut$, 
@@ -635,7 +626,7 @@ Independence of $\eptl$ and $\dFut(\eplSuptm\supcomma\dtheta,\dFoneFixed)$ is su
 if
 $\eptlambda \perp \dFut(\eplSuptm\supcomma\dtheta,\dFoneFixed) \ \forall \ (t,\dtheta,\dFoneFixed)$,
 then condition \textit{(v)} in Proposition \ref{prop2} holds.
-In addition, Proposition \ref{prop2} also holds if the supremum in \eqref{DefRho} is defined over a larger convex set $\fFstar \supseteq \fF$. The same holds for Proposition \ref{prop4} later on. This can for instance be used if the original space $\fF$ is non-convex.
+In addition, Proposition \ref{prop2} also holds if the supremum in \eqref{DefRho} is defined over a larger convex set $\fFstar \supseteq \fF$. The same holds for Proposition \ref{prop4} later on. This can be used if the original space $\fF$ is non-convex.
 %Furthermore, conditions \textit{(ii)} and \textit{(iv)} can be substituted by the  (stricter albeit easier to verify) condition
 %{\it\begin{enumerate}
 %    \item[(iv\,$'$)] $\sum_{k=0}^{\ndF} \binom{\ndF}{\dK} |\dalpha|^{k} \, 
@@ -665,7 +656,7 @@ Conditions \textit{(ii)} and \textit{(iv)} are now satisfied if the factor in fr
 Proposition \ref{prop2} will prove convenient in case the model is correctly specified as it describes the properties of the score-driven model as a data generating process as well as the properties of the score filter at the true parameter $\boldsymbol{\theta}_{0} \in \fTheta$.
 
 
-Irrespective of whether we have correct or incorrect specification of the model, to derive the properties of the ML estimator  we must always analyze the stochastic behavior of the filtered time-varying parameter over different $\boldsymbol{\theta} \in \fTheta$.
+Irrespective of whether we have correct or incorrect specification of the model, in order to derive the properties of the ML estimator,  we must always analyze the stochastic behavior of the filtered time-varying parameter over different $\boldsymbol{\theta} \in \fTheta$.
 Proposition \ref{prop4} stated below is key in establishing the invertibility, moment bounds and e.a.s.\ convergence uniformly over the parameter space $\fTheta$ of the score-driven filtered sequence
 $\{\dFt(\dDataSuptm\supcomma \dtheta,\dFoneFixed)\}$, formulated in terms of the data $\{\dDatat\}$ rather than in terms of the innovations $\{\ept\}$ as in equation \eqref{NRpg10}.
 To state our subsequent proposition concisely, we define 
@@ -732,7 +723,7 @@ then
 %$ \| \dFt(\dDataASuptm\supcomma\cdot) \rSupNorm{\ndF}{\fTheta} < \infty$, and \\ 
 $\sup_{\iTime} \|  \dFt(\dDataSuptm\supcomma\cdot,\dFoneFixed) \rSupNorm{\ndFfin}{\fTheta} < \infty$
 and  
-$\|\dFt(\dDataASuptm\supcomma\cdot)\rSupNorm{\ndF}{\fTheta} < \infty$ for $\ndF \in[0,\ndFfin)$.
+$\|\dFt(\dDataASuptm\supcomma\cdot)\rSupNorm{\ndF}{\fTheta} < \infty$ for any $\ndF<\ndFfin$.
 \end{prop}
 
 The conditions of Proposition \ref{prop4} are easily satisfied by many specific models. Let us illustrate this point by  turning once again to our main example.
@@ -807,7 +798,7 @@ Moreover, conditions \textit{(ii)} and \textit{(iv)} simplify to
 
 %\showandre{Redundant notation sentence ``define $\fDeryt=\sup_{\dlambda \in \fLambda^{*}_{*}} \fDeryt(\dlambda)$.''}
 
-In practice, it may be difficult to verify the contraction condition  \textit{(iv)} of Proposition \ref{prop4} when $\drhotildetn{\ }(\dtheta)$ depends on the unknown measure of the data. Furthermore, in such cases,  the independence condition \emph{(v)} is difficult to satisfy since the data sequence is not independent over time. We note however, that the independence only needs to hold for some random variable that bounds $ \drhotildeonen{\ndF}(\dtheta)$ and satisfies the contraction condition. More generally, Remark \ref{rem4} states an alternative uniform condition that is typically available for fat tailed score-driven models and renders both conditions \textit{(iv)} and \textit{(v)}  redundant. 
+In practice, it may be difficult to verify the contraction condition  \textit{(iv)} of Proposition \ref{prop4} when $\drhotildetn{\ }(\dtheta)$ depends on the unknown measure of the data. Furthermore, in such cases,  the independence condition \emph{(v)} is difficult to satisfy since the data sequence is not independent over time. We note however, that the independence only needs to hold for some random variable that bounds $ \drhotildeonen{\ndF}(\dtheta)$ and satisfies the contraction condition. More generally, remark \ref{rem4} states an alternative uniform condition that is typically available for fat tailed score-driven models and renders both conditions \textit{(iv)} and \textit{(v)}  redundant. 
 
 \begin{rem} \rm
 \label{rem4}
@@ -855,7 +846,7 @@ for sequences in separable Banach spaces. This constitutes a crucial simplificat
 We end this section by extending the results of Proposition \ref{prop4} to the derivative processes 
 $\partial\dFt(\dDataSuptm\supcomma\dtheta,\dFoneFixed)/\partial\dtheta$
 and
-$\partial^2\dFt(\dDataSuptm\supcomma\dtheta,\dFoneFixed)/\partial\dtheta\partial\dtheta\trans$. We use the stationarity, ergodicity, invertibility and bounded moments for the derivative processes for proving the asymptotic normality of the MLE. 
+$\partial^2\dFt(\dDataSuptm\supcomma\dtheta,\dFoneFixed)/\partial\dtheta\partial\dtheta\trans$. We often use the stationarity, ergodicity, invertibility and bounded moments for the derivative processes for proving the asymptotic normality of the MLE. 
 To simplify the notation, we let $\dFit{i}(\dDataSuptm\supcomma\dtheta,\BoldFOneZeroIFixed) \in \mathcal{F}^{(i)}$ denote a vector containing all the $i$th order derivatives of $\dFt$ with respect to $\dtheta$, where $\BoldFOneZeroIFixed \in \mathcal{F}^{(0:i)}$ contains the fixed initial condition for $\dFt$ and its derivatives up to order $i$.
 Similarly, $\dFit{0:i}(\dDataSuptm\supcomma\dtheta,\BoldFOneZeroIFixed) \in \mathcal{F}^{(0:i)} = \mathcal{F} \times \ldots \times \mathcal{F}^{(i)}$ denotes a vector containing $\dFt$ as well as its derivatives with respect to $\dtheta$ up to order $i$.
 %Our moment bounds use only primitive conditions that are formulated directly in terms
@@ -892,14 +883,16 @@ if $\fTheta_1 = \{\dtheta_1\}$.
 
 
 %Note that $h \in \Momentstt{\boldK}(\boldN,m)$ implies $h \in \Momentstt{\boldK}(\boldN,m^{*}) \ \forall \ m^{*} \leq m$. 
-Moment preservation is a natural requirement in the proofs of the asymptotic properties of the MLE because the likelihood and its derivatives are nonlinear functions of the original data $\dDatat$, the time varying parameter $\dFt(\dDataSuptm\supcomma\dtheta,\dFoneFixed)$, and derivatives of the score, such as $\partial\fScaledScore(\dFt,\dData;\dlambda)/\partial\dlambda$
-or
+Moment preservation is a natural requirement in the proofs of the asymptotic properties of the MLE because the likelihood and its derivatives are nonlinear functions of the original data $\dDatat$, of the time varying parameter $\dFt(\dDataSuptm,\dtheta,\dFoneFixed)$, and its derivatives $\partial\fScaledScore(\dFt,\dData;\dlambda)/\partial\dlambda$
+and
 $\partial^2\fScaledScore(\dFt,\dData;\dlambda)/\partial\dFt\partial\dlambda$.
+
+
 For example, every polynomial function  $h(x;\dtheta)=\sum_{j=0}^{J} \theta_{j}x^{j} \ \forall \ (x,\dtheta) \in \fX \times \fTheta$, $\dtheta=(\theta_{0},\ldots,\theta_{J}) \in \fTheta \subseteq \field{R}^{J}$ trivially satisfies $h \in \Moments{\dK}_{\dtheta,\dtheta}(n,m)$  with $m=n/J\ \forall \ \dtheta \in \fTheta$. If  $\fTheta$ is compact, then also $h \in \Moments{\dK}_{\fTheta,\fTheta}(n,m)$  with $m=n/J$.
 %
 %
-Similarly, every $k$-times continuously differentiable function $h(\cdot;\dtheta) \in \field{C}^{\dK}(\fX)$ $ \ \forall \ \dtheta \in \fTheta$, with bounded $k$-th derivative $\sup_{x \in \fX}|h^{(k)}(x;\dtheta)| \leq \bar{h}_{\dK}(\dtheta)<\infty \ \forall \ \dtheta \in \fTheta$, satisfies $h \in \Moments{\dK}_{\dtheta,\dtheta}(n,m)$ with $m=n/k \ \forall \ \dtheta \in \fTheta$. If furthermore $\sup_{\dtheta \in \fTheta}\bar{h}_{\dK}(\dtheta) \leq \bar{\bar{h}}_{}<\infty$, then $h \in \Moments{\dK}_{\fTheta,\fTheta}(n,m)$ with $m=n/k$.
-The \SupplementaryAppendix\ provides further details and examples of moment preserving maps.
+Similarly, every $k$-times continuously differentiable function $h(\cdot;\dtheta) \in \field{C}^{\dK}(\fX)$ $ \ \forall \ \dtheta \in \fTheta$, with bounded $k^{\text{th}}$ derivative $\sup_{x \in \fX}|h^{(k)}(x;\dtheta)| \leq \bar{h}_{\dK}(\dtheta)<\infty \ \forall \ \dtheta \in \fTheta$, satisfies $h \in \Moments{\dK}_{\dtheta,\dtheta}(n,m)$ with $m=n/k \ \forall \ \dtheta \in \fTheta$. If furthermore $\sup_{\dtheta \in \fTheta}\bar{h}_{\dK}(\dtheta) \leq \bar{\bar{h}}_{}<\infty$, then $h \in \Moments{\dK}_{\fTheta,\fTheta}(n,m)$ with $m=n/k$.
+Part \ref{backgroundmomentpreserving} of the \SupplementaryAppendix\ provides further details and examples of moment preserving maps.
 We note that
 $ \Moments{\bol dK}_{\fTheta',\fTheta'}(\boldN,\msymbol)  
 \subseteq \Moments{\boldK}_{\fTheta,\fTheta}(\boldN,\msymbol^{*})$
@@ -916,14 +909,13 @@ Note that, for the moments of all functions, the argument
 $\dFt$ is always understood to be the stationarity limit filter which has 
 $\ndF>0$ moments under appropriate conditions stated in Proposition 
 \ref{prop4}. We shall make extensive use of analogous definitions for other 
-functions and their partial derivatives.  Finally, we use $\mbare$ to denote moments 
-of functions after the taking supremum over $\dFt$. For example, $\msfl$  denotes 
-the number of moments of the random variable
-$\sup_{\dF}|\partial^2\fScaledScore(\dF,\dData;\dlambda)/ \partial\dF\partial\dlambda|$, uniformly in $\dtheta  \in \Theta$, or in moment preserving notation
+functions and their partial derivatives.  Finally, we will use a bar to denote moments 
+of functions after taking supremum over $\dFt$. For example, $\msfl$  denotes 
+the moments of the random variable
+$\sup_{\dF}|\partial^2\fScaledScore(\dF,\dData;\dlambda)/ \partial\dF\partial\dlambda|$, uniformly in $\dtheta  \in \Theta$. This means, in moment preserving notation that 
 \begin{equation*}
-\sup_{\dF}\Big|\frac{\partial^2\fScaledScore(\dF,\dData;\cdot)}{\partial\dF\partial\dlambda} \Big| \in  \Moments{\boldK}_{\fTheta,\fTheta}(\boldN,\msfl),
+\sup_{\dF}\Big|\frac{\partial^2\fScaledScore(\dF,\dData;\cdot)}{\partial\dF\partial\dlambda} \Big| \in  \Moments{\boldK}_{\fTheta,\fTheta}(\boldN,\msfl) \ \text{ where } \  \boldN=(\ndF,\ndata)
 \end{equation*}
-with $\boldN=(\ndF,\ndata)$.
 We apply the same notational principle to other functions and derivatives.
 
 %, %with respect to $\dtheta$, i.e.,
@@ -946,7 +938,7 @@ Let $\min\{\ns,\nsl,\msf,\mslf,\msff\}>0$. Then $\{\dFit{1}(\dDataSuptm\supcomma
 converges e.a.s.~to a unique SE sequence
 $\{\dFit{1}(\dDataASuptm\supcomma\dtheta)\}_{\iTime \in \field{Z}}$, uniformly in $\fTheta$, and furthermore, we have $\sup_{\iTime} \|  \dFit{1}(\cdot,\BoldFOneZeroOneFixed) \rSupNorm{\ndFdfin }{\fTheta} < \infty$
 and  
-$\|\dFit{1}(\cdot)\rSupNorm{\ndFd}{\fTheta} < \infty$ for any $\ndFd \in [0,\ndFdfin)$, where 
+$\|\dFit{1}(\cdot)\rSupNorm{\ndFd}{\fTheta} < \infty$ for any $\ndFd<\ndFdfin$, where 
 \begin{align*}
    \ndFdfin & := \min \big\{\ndF\ ,\  \ns \ , \  \nsl \big\}.
 \end{align*}
@@ -956,7 +948,7 @@ derivative process $\{\dFit{2}(\dDataSuptm\supcomma\dtheta,\BoldFOneZeroTwoFixed
 converges e.a.s.~to a unique SE sequence
 $\{\dFit{2}(\dDataASuptm\supcomma\dtheta)\}_{\iTime \in \field{Z}}$, uniformly in $\fTheta$. Furthermore,  $\sup_{\iTime} \|  \dFit{2}(\cdot,\BoldFOneZeroTwoFixed) \rSupNorm{\ndFddfin }{\fTheta} < \infty$
 and  
-$\|\dFit{2}(\cdot)\rSupNorm{\ndFdd}{\fTheta} < \infty$ for any $\ndFdd \in [0,\ndFddfin)$, where 
+$\|\dFit{2}(\cdot)\rSupNorm{\ndFdd}{\fTheta} < \infty$ for any $\ndFdd<\ndFddfin$, where 
 \begin{align*}
     \ndFddfin & := \min \Big\{\ndFd\ ,\  \nsll \ , \ \frac{\nsf \ndFd }{\nsf + \ndFd} \ , 
     \ \frac{\nsff \ndFd }{2 \nsff + \ndFd} \ , \ \frac{ \nsfl \ndFd }{ \nsfl + \ndFd} \Big\}.
@@ -968,18 +960,18 @@ $\|\dFit{2}(\cdot)\rSupNorm{\ndFdd}{\fTheta} < \infty$ for any $\ndFdd \in [0,\n
 
 The expressions for $\ndFdfin$ and $\ndFddfin$ may appear complex at first sight.
 However, they arise naturally from expressions for the derivative of $\dFt(\dDataSuptm\supcomma\dtheta,\dFoneFixed)$ with respect to $\dtheta$.
-Let us turn to our main example and analyze the moment conditions of Proposition \ref{prop4new} in a practical setting. 
-
-
+Let us turn to our main example and analyze the moment conditions of Proposition \ref{prop4new} in a practical setting. All derivatives analyzed below for our main example are derived in  \SupplementaryAppendix~\ref{backgroundmomentpreserving}.
 \begin{exmc} %\rm
-First, by Proposition \ref{prop4}, the limit filtered process $\dFt(\dDataASuptm\supcomma\dtheta)$ is guaranteed to have $\ndF$ moments, uniformly in $\dtheta$, as long as the contraction condition is satisfied. 
-Note that $\ndF < \ndFfin$, where $\ndFfin$ is determined via condition \textit{(iii)} of Proposition~\ref{prop4}, which in the case of our main example means we can set $\ndFfin$ arbitrarily high and thus $\ndF>0$, since $\fScaledScoret$ is uniformly bounded in $\dDatat$ for fixed $\dFoneFixed$.
-The remaining derivatives are straightforward to check and can be found in the \SupplementaryAppendix. 
-From these expressions, we obtain
-$\ns,\nsl \leq \ndF$, and $\msf, \mslf,\msff \to \infty$, such that $\min\{\ns,\nsl,\msf,\mslf,\msff\} > 0 $ and $\ndFd < \ndFdfin = \ndF$.
-Similarly, we obtain
-$\nsll \leq \ndF$ and $\nsf, \nsff, \nsfl, \msllf,\mslff,\msfff \to \infty$, such that $\min\{\nsll,\msllf,\mslff,\msfff\} > 0$ and $\ndFdd < \ndFddfin = \min\{\ndFd, \ndF, \ndFd/2\} = \ndF/2$.
-As $\ndF$ can be set arbitrarily high, it is easy to establish moments up to large order for both derivative processes for the score-driven volatility model.
+First, by Proposition \ref{prop4}, the limit filtered process $\dFt(\dDataASuptm\supcomma\cdot)$ is guaranteed to have $\ndF$ moments, uniformly in $\dtheta$. Second, since the score and its first and second derivatives with respect to 
+$\dlambda$ and $\dFt$  are uniformly bounded  in $\dDatat$, we can set $\ns$ and $\nsl$ arbitrarily large, and hence, we obtain $\ndFd<\ndFdfin=\ndF$.
+Third, since the first derivative of the score with respect to $\dFt$ and the 
+cross derivative with respect to $\dFt$ and $\dlambda$ are uniformly bounded 
+in $\dDatat$, we can also set $\msf$ and $\msfl$ arbitrarily large.
+Similarly, the second derivative of the score with respect to $\dFt$ is 
+uniformly bounded in $\dDatat$ for any $\dFoneFixed \geq \domega>0$, such 
+that all moments of the second derivative of the score exist. Hence we can set 
+$\msff$ arbitrarily large.
+As a result, we obtain $\ndFdd <\ndFd/2 <\ndF/2$.
 \end{exmc}
 
 We emphasize that the moment conditions stated in Proposition \ref{prop4new} are primitive in the sense that they relate directly to the basic building blocks of the score filter: the score function and its derivatives. 
@@ -1096,7 +1088,7 @@ To establish consistency, we use the following two assumptions.
 $\exists \ \fThetaStar \subseteq \field{R}^{\dimtheta} $, $\ndF >0$ and $\ddelta>0$ such that, for every %nonrandom 
 $\dFlNonRandom \in \fF$,
 \begin{enumerate}
-    \item[(i)] $ \| \fScaledScore(\dFlNonRandom,\dDatat; \cdot) \rSupNorm{\ndF+\ddelta}{\fThetaStar}<\infty$;
+    \item[(i)] $ \| \fScaledScore(\dFlNonRandom,\dDatat; \cdot) \rSupNorm{\ndF}{\fThetaStar+\ddelta}<\infty$;
     \item[(ii)] $\sup_{(\dFstar,\dData,\dtheta) \in \fF \times \fData \times \fThetaStar} 
     |\dbeta + \dalpha \, \partial \fScaledScore(\dFstar,\dData;\dlambda)/\partial\dF|
     <1$.
@@ -1116,13 +1108,13 @@ $\dFlNonRandom \in \fF$,
 $\nell = \min \{ \nloggtildeprime, \nptilde\} \geq 1$ and $\mn>0$.
 \end{ass}
 
-Assumption \ref{ass3}  ensures the convergence of the  sequence $\{\dFt(\dDataSuptm\supcomma\dtheta,\dFoneFixed)\}$ to an SE limit $\{\dFt(\dDataSuptm\supcomma\dtheta)\}$ with $\ndF$ moments. Alternative primitive conditions leading to the same result can be found in Proposition \ref{prop4} and the subsequent remarks.  Assumption \ref{ass4} ensures one bounded moment for the log likelihood function and a uniform logarithmic moment for its derivative with respect to $\dF$. Both assumptions are stated in terms of the core structure of the score-driven model: the density of the innovations $\ptilde$, the link function $\NatLog\fLinktilde'$, the unscaled score $\fScoret$, and the scaled score $\fScaledScoret$. 
+Assumption \ref{ass3}  ensures the convergence of the  sequence $\{\dFt(\dDataSuptm\supcomma\dtheta,\dFoneFixed)\}$ to an SE limit $\{\dFt(\dDataSuptm\supcomma\dtheta)\}$ with $\ndF$ moments. Alternative primitive conditions leading to the same result can be found in Proposition \ref{prop4} and the subsequent remarks.  Assumption \ref{ass4} ensures one bounded moment for the log likelihood function and a uniform logarithmic moment for its derivative with respect to $\dF$. Both assumptions are stated in terms of the core structure of the score-driven model, the density of the innovations $\ptilde$, the link function $\NatLog\fLinktilde'$, the unscaled score $\fScoret$, and the scaled score $\fScaledScoret$. 
 The number of bounded moments of $\ptilde$, $\NatLog\fLinktilde'$,  $\fScoret$ and $\fScaledScoret$ can be easily determined as laid out in \SupplementaryAppendix~\ref{backgroundmomentpreserving}.
 We illustrate the verification of these assumptions using our main example.
 
 \begin{exmc} %\rm
 From our earlier derivations around equation \eqref{exampcondition}, we already know that the conditions of Assumption~\ref{ass3} can be easily satisfied for an appropriate compact parameter space $\fThetaStar$.
-For Assumption \ref{ass4}, note that we have $\fLinktilde'(\dFt,\dDatat) = 0.5\dFt^{-1}$, such that $\nloggtildeprime\to\infty$ given $\dFt \geq \omega > 0$ under the parameter constraint  $\dbeta>\dalpha>0$ and an initialization $\dFoneFixed\geq\domega$. 
+For Assumption \ref{ass4}, note that we have $\fLinktilde'(\dFt,\dDatat) = 0.5\dFt^{-1}$, such that $\nloggtildeprime\to\infty$ given $\dFt \geq \omega > 0$ under the parameter constraint  $\dbeta>\dalpha>0$ and the initialization $\dFoneFixed>0$. 
 
 Using the expression 
 \[
@@ -1162,7 +1154,7 @@ Finally, let  $\dthetaz \in \fTheta$ be the unique maximizer of the limit log li
 %--------------------------------------------------------------
 %--------------------------------------------------------------
 
-We emphasize once more that the proofs and the results of Theorem~\ref{theo2} establish global rather than local consistency. In particular, the assumptions ensure the appropriate limiting behavior of the average log-likelihood over the entire parameter space $\Theta$, rather than in a (possibly arbitrarily small) parameter space around the true parameter value only. This stands in sharp contrast with most of the existing literature on score models, which only delivers local asymptotic results in a neighborhood of $\dtheta_{0}$. 
+We emphasize once more that the proofs and the results of Theorem~\ref{theo2} establish global rather than local consistency. In particular, the assumptions ensure the appropriate limiting behavior of the average log-likelihood over the entire parameter space $\Theta$, rather than in a (possibly arbitrarily small) parameter space around the true parameter value only. This stands in sharp contrast with most of the existing literature on score models, which only delivers local asymptotic results on a neighborhood of $\dtheta_{0}$. 
 
 Theorem~\ref{theo2} also differs from the existing score literature in that it establishes the strong consistency of the MLE in a possibly mis-specified model setting. In particular, consistency of the MLE is obtained with respect to a pseudo-true parameter $\dthetaz \in \fTheta$ that
 is \textit{assumed} to be the \textit{unique} maximizer of the limit log-likelihood
@@ -1178,7 +1170,7 @@ is typically used in most of the existing literature and achieved by studying th
 
 To formulate our global identification result, we introduce a slightly more precise notation concerning the domains and images of the key mappings defining the score-driven model. Define the set  $\fDatag \subseteq \field{R}$ as the image of $\fFg$ and $\fEp$ under $\fLink$, i.e., $\fDatag:=\{\fLink(\dF,\ep), \ (\dF,\ep) \in\fFg \times \fEp\}$, where $\fFg$ denotes the domain (for $\dFt$) of $\fLink$. 
 Let $\fEp$ denote the common support of $\fDensEpl \ \forall \ \lambda \in \Lambda$, and let $\fFs$ and $\fDatas$  denote subsets of $\field{R}$ over which the map $\fScaledScore$ is defined.  Below, $\Lambda_{*}$ denotes the orthogonal projection of a set $\fThetaStard \subseteq \field{R}^{\dimtheta}$ onto the subspace $\field{R}^{d_{\lambda}}$ holding the static parameters in $\dlambda$. Furthermore, statements for almost every (f.a.e.) element in a set hold with respect to Lebesgue measure. 
-Finally, we let $\fLink \in \MomentsTT{(2,0)}(\boldN,\nfLink)$ with $\boldN=(\ndF,\nsymbol_\ep)$, so that $\nfLink$ denotes the number of bounded moments of $\fLink(\dFt,\ept)$ when $\ept$ has $\nsymbol_\ep$ moments and $\dFt$ has $\ndF$ bounded moments. In practice, the resulting $\nfLink$ bounded moments can be derived from the moment preservation properties laid out in the \SupplementaryAppendix.
+Finally, we let $\fLink \in \MomentsTT{(2,0)}(\boldN,\nfLink)$ with $\boldN=(\ndF,\nsymbol_\ep)$, so that $\nfLink$ denotes the number of bounded moments of $\fLink(\dFt,\ept)$ when $\ept$ has $\nsymbol_\ep$ moments and $\dFt$ has $\ndF$ bounded moments. In practice, the resulting $\nfLink$ bounded moments can be derived from the moment preservation properties laid out in \SupplementaryAppendix~\ref{backgroundmomentpreserving}.
 
 The following two assumptions allow us to derive the appropriate properties for 
 $\{\dDatat\}_{t\in \field{Z}}$ and 
@@ -1202,7 +1194,7 @@ $\exists \ \fThetaStard \subseteq \field{R}^{\dimtheta}$ and $n_\ep\geq 0$ such 
 \end{ass}
 
 Conditions \textit{(i)} and \textit{(iii)} of Assumption \ref{ass5} ensure that the  innovations $\ept$ have a  non-degenerate support and that  $\fLink(\dF,\cdot)$ is continuously differentiable and invertible with continuously differentiable derivative. As a result, the conditional distribution $p_{y}$ of $\dDatat$ given $\dFt$ is non-degenerate and uniquely defined by the distribution of $\ept$.
-Bounded moments for $\dDatat(\dthetaz)$ up to order $\ndata$ follow from moments of $\ept$ and $\dFt$ via condition \textit{(ii)}; see the main example below for an illustration of how to operate this condition. 
+$\ndata$ bounded moments for $\dDatat(\dthetaz)$ follow from moments of $\ept$ and $\dFt$ via condition \textit{(ii)}; see the main example below for an illustration of how to operate this condition. 
 Finally, condition \textit{(iv)} states that the static model defined by the observation equation $\dDatat=\fLink(\dF,\ept)$ and the density $p_{u}(\cfdot;\lambda)$ is identified. It requires the conditional density of $\dDatat$ given $\dFt=\dF$ to be unique for every pair $(\dF,\dlambda)$. 
 This requirement is very intuitive: one would not extend a static model to a dynamic one if the former is not already identified.
 
@@ -1217,7 +1209,6 @@ This requirement is very intuitive: one would not extend a static model to a dyn
 \begin{exmc} %\rm
 For the Student's $t$ volatility model, the domain of $\ept$ is always $\field{R}$, which satisfies part \textit{(i)} of Assumption~\ref{ass5}.
 As $\fLink(\dF,\ep)=\dF^{1/2}\ep$, we can use a standard H\"older inequality to obtain $\nfLink=\ndF\cdot\nsymbol_\ep/(2\nsymbol_\ep+\ndF)$, such that parts \textit{(ii)}, \textit{(iii)}, and \textit{(iv)} are satisfied for $\ndF>0$, $0 < \nsymbol_\ep < \inf_{\fLambda_*} \dlambda$, and $\domega>0$, $\dFoneFixed>0$, and $\dbeta>\dalpha>0$.
-Note that $\ndF$ follows from Proposition~\ref{prop2}, part \textit{(iii)}, and can be set arbitrarily high.
 \end{exmc}
 
 
@@ -1273,7 +1264,7 @@ Furthermore, by the linearity of $\fScaledScoreU$ in $\dFt$, condition \textit{(
 %where $\bar\dbeta$ is the supremum $\dbeta$ over $\fTheta$, and $\boldsymbol{1}_{E}$ denotes the indicator function for the event $E$.\\
 %\textbf{note this is a strange result, as the final inequality depends on $\dlambda$, whereas a sup over $\fTheta$ was taken earlier. I find this very puzzling ...}
 %}
-In particular, for $\ndF=1$, we obtain the requirement $|\dbeta|<1$, which together with the parameter restrictions to ensure positivity of $\dFt$ result in $1>\dbeta>\dalpha>0$. Larger regions can be obtained for smaller values of $\ndF$.
+In particular, for $\ndF=1$, we obtain the requirement $|\dbeta|<1$, which together with the parameter restrictions to ensure positivity of $\dFt$ result in $1>\dbeta>\dalpha>0$.
 \end{exmc}
 
  
@@ -1351,13 +1342,13 @@ The consistency region $\fThetaStar \cap  \fThetaStard$ under correct specificat
 %\end{figure}
 %
 
-To establish asymptotic normality of the MLE, we impose an assumption that delivers $2+\delta$ moments for the first derivative of the log likelihood function, and $1$ moment for the second derivative. We make use once again of our notation for moment preserving maps. In particular, we let quantities like $\nptilde^{\dlambda}$ and $\nptilde^{\dF \dlambda}$ 
+To establish asymptotic normality of the MLE, we impose an assumption that delivers one moment for the first derivative of the log likelihood function, and $2+\delta$ for the second derivative. We make use once again of our notation for moment preserving maps. In particular, we let quantities like $\nptilde^{\dlambda}$ and $\nptilde^{\dF \dlambda}$ 
 denote the number of bounded moments of the derivative of $\ptilde$ with respect to $\lambda$ and 
 the cross derivative with respect to $\dF$ and $\lambda$, respectively. We also let
 $\ndFd$ and $\ndFdd$ be defined as in Proposition \ref{prop4new}. Finally, for notational simplicity we define the following quantities, 
 
 \bqn
-\nfin & = & 	\min\big\{\nn \ , \ \mnf \ , \ \mnl \ , \ \mnff \ , \ \mnlf \ , \ \mnll \big\} \ ,
+n^{*} & = & 	\min\big\{\nn \ , \ \mnf \ , \ \mnff \ , \ \mnfff \ , \ \nnl \ , \ \mnl \ , \ \mnlf \ , \ \mptildelff \ , \ \mptildellf \big\} \ ,
 \label{eq_nstar}
 \\
      \nellp & = & \min \Bigg\{ \nptildel \ , \ \frac{\nn   \ndFd}{\nn +\ndFd}  \Bigg \},
@@ -1365,22 +1356,20 @@ $\ndFd$ and $\ndFdd$ be defined as in Proposition \ref{prop4new}. Finally, for n
     \\
          \nellpp & = & \min \Bigg\{ 
     \nptilde^{\dlambda \dlambda} \ ,\ 
-%    \frac{\nptilde^{\dF\dlambda}\ndFd}{\nptilde^{\dF\dlambda} + \ndFd} \ ,\ 
-    \frac{ \nn \ndFdd}{ \nn + \ndFdd} \ , \  
-    \frac{ \nnl \ndFd}{ \nnl + \ndFd} \ , \  
-    \frac{ \nnf \ndFd}{ 2\nnf + \ndFd}
+    \frac{\nptilde^{\dF\dlambda}\ndFd}{\nptilde^{\dF\dlambda} + \ndFd} \ ,\ \frac{ \nn^{\dF} \ndFdd}{ \nn^{\dF} + \ndFdd} \ , \  
+    \frac{ \nn^{\dF \dF} \ndFd}{ 2\nn^{\dF \dF} + \ndFd}
     \Bigg \} .\\
     \label{eq_nellpp}
     \nonumber
 \eqn
 
-%Inspection of the log likelihood and its derivatives in the Technical Appendix reveals that $\nellp$ and $\nellpp$ offer bounds for the moments of the MLE's score and Hessian respectively. 
+Inspection of the log likelihood and its derivatives in the Technical Appendix reveals that $\nellp$ and $\nellpp$ offer bounds for the moments of the MLE's score and Hessian respectively. 
 
 
 \begin{ass}
 \label{ass7}
 $\exists\ \fThetaStarsStar \subseteq \field{R}^{\dimtheta}$ such that 
-$\nfin>0$, $\nellpp\geq 1$ and $\nellp > 2+\delta$ for some $\delta>0$.
+$n^{*}>0$, $\nellpp\geq 1$ and $\nellp > 2+\delta$ for some $\delta>0$.
 %$\nsk$, $\nptilde^{(\boldK')}$, and $\nloggtildeprime^{(\boldK'')}$ with
 %$\fScaledScore^{(\boldK)} \in \MomentsSymbol_{\fTheta}(\boldN,\nsk)$,
 
@@ -1401,7 +1390,7 @@ $\nfin>0$, $\nellpp\geq 1$ and $\nellp > 2+\delta$ for some $\delta>0$.
 %\vspace{0.3cm}
 
 Similar to the moment conditions in Proposition~\ref{prop4}, the moment
-conditions in Assumption~\ref{ass7} relate directly to low-level (primitive) elements of the model. The expressions in (\ref{eq_nstar}),  (\ref{eq_nellp}) and (\ref{eq_nellpp}) follow directly from the formulas for the derivatives of the 
+conditions in Assumption~\ref{ass7} relate directly to low-level (primitive) elements of the model. The expression in (\ref{eq_nstar}),  (\ref{eq_nellp}) and (\ref{eq_nellpp}) follow directly from the formulas of derivatives of the 
 log-likelihood with respect to $\dtheta$. 
 %Consider for example the expression for $\nellp$ in \eqref{eq_nellp}. 
 %The first term in the derivative of $\LogLikT(\dtheta,\dFoneFixed)$ with respect to $\dtheta$ 
@@ -1410,24 +1399,32 @@ log-likelihood with respect to $\dtheta$.
 %Bounded moments are ensured 
 %by the second term in \eqref{eq_nellp} involving $\nloggtildeprime^{\dData}$ and $\ndFd$ through the application of a standard H\"older inequality. 
 %The same reasoning applies to the third component of $\nellp$, which corresponds to the derivative of $\ptildet$ with respect to $\dFt$, multiplied by the derivative of $\dFt$ with respect to $\dtheta$.
-Having $\nellp > 2+\delta$ facilitates the application of a central limit theorem to the score. Similarly, $\nellpp\geq 1$ allows us to use a uniform law of large numbers for the Hessian. Finally, the condition $\nfin>0$ is designed to ensure that the e.a.s.\ convergence of the filter $\dFt(\dDataSuptm\supcomma\dtheta,\dFoneFixed)$ to its stationary limit is appropriately reflected in the convergence of both the score and the Hessian.
+Having $\nellp > 2+\delta$ facilitates the application of a central limit theorem to the score. $\nellpp\geq 1$ is used to obtain a uniform law of large numbers to the Hessian. Finally, the condition $n^{*}>0$ is designed to ensure that the e.a.s.~convergence of the filter $\dFt(\dDataSuptm\supcomma\dtheta,\dFoneFixed)$ to its stationary limit is appropriately reflected in the convergence of both the score and the Hessian.
 
 In any case, if one favors simplicity at the cost of some generality, then  the expressions for $\nellp$ and $\nellpp$ can be easily simplified to a single moment condition as stated in the following remark.
 
 \begin{rem} \rm
 \label{rem5}
-Let $\msymbol$ denote the lowest of the primitive derivative moment numbers $\nptilde^{\lambda}$, $\nn$,  etc. Then $\msymbol \geq 4+\ddelta'$ implies $\nellp> 2+\ddelta$ and $\nellpp \geq 1$, for some positive $\ddelta'$ and $\ddelta$.
+Let $\msymbol$ denote the lowest of the primitive derivative moment numbers $\nptilde^{\lambda}$, $\nn$,  etc. Then $\msymbol \geq 4+\delta'$ implies $\nellp> 2+\delta$ and $\nellpp \geq 1$.
 \end{rem}
 
 \noindent It is often just as easy, however, to check the moment conditions formulated in Assumption~\ref{ass7} 
 directly rather than the simplified conditions in Remark \ref{rem5}. We illustrate this using our main example.
 
 \begin{exmc} %\rm
-For the Student's $t$ volatility model, an number of derivative functions need to be computed. These can be found in the \SupplementaryAppendix. Many of these are uniformly bounded functions. In particular, we have 
-$\nptildell, \mn, \mnf, \mnl, \mnll, \mnlf, \mnff \to \infty$.
-Furthermore, $\nptildel \leq \ndata/\ddelta$ for some (small) $\ddelta>0$. 
-Therefore, if some finite moment of $\dDatat$ exists, we can set $\nptildel$ arbitrarily large.
-As a result, $\nfin > 0$, $\nellp \leq \min\{\ndata/\ddelta', \ndFd\}$ for arbitary $\ddelta'>0$, and $\nellpp \leq \min\{\ndFdd, \ndFd, \tfrac12\ndFd\}$. We have derived earlier that $\ndFdd < \ndFd/2$, such that $\nellp>2+\ddelta$ and $\nellpp \geq 1$ both imply $\ndFd > 2+\ddelta$. If the contraction condition is met over the entire parameter space, then as also shown earlier we can set $\ndFd$ arbitrarily high and thus statisfy Assumption~\ref{ass7}.
+For the Student's $t$ volatility model, derivatives of $\ptilde$ with respect to $\dlambda$ are sums of logarithmic functions and uniformly bounded functions of $\dDatat^2/\dFt$. If there exists an arbitrarily small moment of $\dDatat$, we can therefore set 
+$\nptilde^{\dlambda}, \nptilde^{\dlambda \dlambda} \to\infty$.
+As $\NatLog \fLinktilde'(\dF,\dData) = -0.5\NatLog\dFt$ and $\dFt$ is uniformly bounded from below by a strictly positive number, we have $\nloggtildeprime^{\dF}, \nloggtildeprime^{\dF \dF} \to\infty$.
+Given the Student's $t$ specification and the uniform strict positivity of $\dFt$, it is also easily seen that
+$\nptilde^{\dF}, \nptilde^{\dF \dF}, \nptilde^{\dF \dlambda} \to\infty$.
+So if some small moment of $\dDatat$ exists, equations \eqref{eq_nellp} and \eqref{eq_nellpp} simplify to
+\[
+    \nellp = \ndFd, 
+    \qquad
+    \nellpp = \min\left\{ \smallfrac{1}{2}\ndFd, \ndFdd \right\}.
+\]
+We already established before that, for this model, $\ndFd$ can be set arbitrarily close to $\ndF$ and $\ndFdd$ arbitrarily close to $\ndFd/2$. Hence $\nellp >  2+\delta$ and $\nellpp \geq 1$ if $\ndF > 2+\delta$ for some $\delta>0$. As already shown earlier, this requirement is met for a parameter space that meets contraction condition \eqref{exampcondition}.
+\chicosays{Final check needed here. Some moment conditions missing in this example.}
 \end{exmc}
 
 %--------------------------------------------------------------
@@ -1510,7 +1507,7 @@ Theorem~\ref{cor2} does not have a separate $\ndata$-moment condition like Theor
 
 
 \begin{exmc} %\rm
-To verify the contitions of Theorem \ref{cor2} for the main example, we have already shown that \ref{ass7} requires $\ndF > 2 + \ddelta$. Using the derivations below Proposition~\ref{prop4}, we subsequently showed that this condition is met if the contraction condition \eqref{exampcondition} is satisfied, and if some arbitrarily small moment $\ndata>0$ of $\dDatat$ exist. Given the specification $\fLink(\dFt,\ept) = \dFt^{1/2}\ept$, the latter is ensured if $\inf_\fLambda \dlambda = \underline{\dlambda} > 0$ such that an arbitrarily small moment exists for $\ept$, and (using Proposition~\ref{prop2}) if 
+To verify the contitions of Theorem \ref{cor2} for the main example, we have already shown that \ref{ass7} requires $\ndF > 2 + \delta$. Using the derivations below Proposition~\ref{prop4}, we subsequently showed that this condition is met if the contraction condition \eqref{exampcondition} is satisfied, and if some arbitrarily small moment $\ndata>0$ of $\dData$ exist. Given the specification $\fLink(\dFt,\ept) = \dFt^{1/2}\ept$, the latter is ensured if $\inf_\fLambda \dlambda = \underline{\dlambda} > 0$ such that an arbitrarily small moment exists for $\ept$, and (using Proposition~\ref{prop2}) if 
 \bq{}
     \sup_\fTheta
     \Ee 
@@ -1525,7 +1522,7 @@ The moment conditions on the innovations $\ept$ are thus considerably weaker tha
 \end{exmc}
 
 
-The theorems and corollaries derived in this section thus establish the existence, strong consistency, global identification, and asymptotic normality of the MLE for a wide class of score-driven models under correct and incorrect model specification. The scope of the theory developed above can be appreciated even better by considering an additional range of empirically relevant examples, including conditional location models with fat tails, conditional location models with skewness, conditional log-volatility models, conditional duration models with fat-tailed densities, and models for non-linear transformations of location. In all these cases, the current theory can be readily applied.
+The theorems and corollaries derived in this section thus establish the existence, strong consistency, global identification, and asymptotic normality of the MLE for a wide class of score-driven models under correct and incorrect model specification. The scope of the theory developed above can be appreciated even better by considering the additional range of empirically relevant examples provided in \SupplementaryAppendix\ \ref{FurtherApplications}. These include conditional location models with fat tails, conditional location models with skewness, conditional log-volatility models, conditional duration models with fat-tailed densities, and models for non-linear transformations of location. In all these cases, the current theory can be readily applied and we invite the reader to check how the assumptions can be concretely verified in each of these cases.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1580,7 +1577,7 @@ We believe that the presented results establish a proper foundation for the use 
 %--------------------------------------------------------------
 
 
-\section{Proofs of Main Results} % (fold) 
+\section{Proofs} % (fold) 
 
 
 %--------------------------------------------------------------
@@ -1612,8 +1609,8 @@ now directly follow from
 conditions \textit{(i)} and \textit{(iii)}--\textit{(v)} in Proposition \ref{prop2}.
 Condition \textit{(ii)} in Proposition \ref{prop1} 
 directly follows from 
-condition \textit{(ii)} in Proposition \ref{prop2}
-by observing that from the mean value theorem we have
+condition \textit{(ii)} in Proposition \ref{prop2}.
+by observing that from the mean value theorem, we have
 \begin{equation*}
     \begin{split}
 & \Ee \sup_{(x,x') \in \fX \times \fX : x\neq x'} \frac{| \fStochrec(x,\dVtTheta,
@@ -1734,7 +1731,7 @@ Finally, condition \textit{(v.b)} in Proposition \ref{prop3} directly follows fr
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\proofskip\noindent 
+\bigskip\noindent 
 For the proof of Remark \ref{rem4}, see \SupplementaryAppendix\ \ref{RemainingResults}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1752,9 +1749,9 @@ For the proof of Remark \ref{rem4}, see \SupplementaryAppendix\ \ref{RemainingRe
 \textit{Step 1, SE for derivatives of $\dFt$:}
 The desired result follows by noting that the vector derivative processes 
 $\{\dFit{i}(\dDataSuptm\supcomma\dtheta,\BoldFOneZeroIFixed)\}_{\iTime\in \field{N}}$ 
-for $i=1,2$ and initialized at $\BoldFOneZeroIFixed$ satisfy the conditions of Theorem 2.10 in \cite{smikosch2006} for perturbed stochastic recurrence equations. In particular, they consider a  recurrence of the from $x_{t+1} = \phi_{t}(x_{t})$ where $\{\phi_{t}\}$ converges to an  SE sequence $\{\tilde \phi_{t}\}$ that satisfies the conditions of Bougerol's theorem $\mathbb{E} \log^{+}|\tilde \phi_{t}(0) |<\infty$, $\mathbb{E} \log \sup_{x}|\tilde \phi_{t}'(x)|<\infty$. In particular, one must have a logarithmic moment  $\mathbb{E}\log^{+}|\tilde x_{t}|$ for the solution $\{\tilde x_{t}\}$  of the unperturbed SE system, and the perturbed recurrence must satisfy\footnote{We state the convergence of $\phi_{t}$ at some point $\bar{x}$ rather than at the origin $\phi_{t}(0)$ as in \cite{smikosch2006} since, depending on the application, our recursion may not be well defined at $\bar{x}=0$.} 
+for $i=1,2$ and initialized at $\BoldFOneZeroIFixed$ satisfy the conditions of Theorem 2.10 in \cite{smikosch2006} for perturbed stochastic recurrence equations. In particular, they consider a  recurrence of the from $x_{t+1} = \phi_{t}(x_{t})$ where $\{\phi_{t}\}$ converges to an  SE sequence $\{\tilde \phi_{t}\}$ that satisfies the conditions of Bougerol's theorem $\mathbb{E} \log^{+}|\tilde \phi_{t}(0) |<\infty$, $\mathbb{E} \log \sup_{x}|\tilde \phi_{t}'(x)<\infty$. In particular, one must have a logarithmic moment  $\mathbb{E}\log^{+}|\tilde x_{t}|$ for the solution $\{\tilde x_{t}\}$  of the unperturbed SE system, and the perturbed recurrence must satisfy\footnote{We state the convergence of $\phi_{t}$ at some point $\bar{x}$ rather than at the origin $\phi_{t}(0)$ as in \cite{smikosch2006} since, depending on the application, our recursion may not be well defined at $\bar{x}=0$.} 
 \begin{equation*}
-	|\phi_{t}(\bar{x}) - \tilde\phi_{t}(\bar{x})| \stackrel{e.a.s.}{\to} 0 \ , \ \ \text{for some $\bar{x} \in \mathbb{R}$} \quad \text{and } \quad \sup_{x}|\phi_t'(x)-\tilde \phi_t'(x)| \stackrel{e.a.s.}{\to} 0 \quad \text{as } \ t \to \infty. 
+	|\phi_{t}(\bar{x}) - \tilde\phi_{t}(\bar{x})| \stackrel{eas}{\to} 0 \ , \ \ \text{for some $\bar{x} \in \mathbb{R}$} \quad \text{and } \quad \sup_{x}|\phi'(x)-\tilde \phi'(x)| \stackrel{eas}{\to} 0 \quad \text{as } \ t \to \infty. 
 \end{equation*}
 In the present context, the perturbed sequence 
 $\{\dFit{i}(\dDataSuptm\supcomma\dtheta,\BoldFOneZeroIFixed)\}_{\iTime \in \mathbb{N}}$
@@ -1767,7 +1764,7 @@ $\{\dFit{0:i-1}(\dDataSuptm\supcomma\dtheta)\}_{\iTime \in \mathbb{Z}}$.
 %For convenience, we now omit the initialization vector, and adopt the notation $f_{i,\dtheta,t}:=\dFit{i}(\dDataSuptm\supcomma\dtheta,\BoldFOneZeroIFixed)$ and $\BoldF_{0:i,\dtheta,t}:=(f_{0,\dtheta,t},\ldots,f_{i,\dtheta,t})$. Define $\mathbf{v}_{i,t}=(\dDatat,\BoldF_{0:i,\dtheta,t})$.  
 
 In Appendix \ref{secdergen} 
-we show that the dynamic equations generating each element of the partial derivative processes take the form
+we show that the dynamic equations generating each element of partial derivative processes take the form
 \begin{equation}
     \label{eqderprocproof}
     \dFit{i}(\dDataSuptm\supcomma\dtheta,\BoldFOneZeroIFixed)
@@ -1776,9 +1773,7 @@ we show that the dynamic equations generating each element of the partial deriva
     \dBt(\dtheta,\dFoneFixed)\ \dFitm{i}(\dDataSuptm\supcomma\dtheta,\BoldFOneZeroIFixed),
 \end{equation}
 with 
-$\dBt(\dtheta,\dFoneFixed) = \dbeta + \dalpha\,  \partial  \fScaledScore(\dFt(\dtheta,\dFoneFixed),\dDatat; \dlambda) / \partial \dF$ not depending on the order of the derivative $i$. 
-The expressions for $\dAit{1}(\dtheta,\dFoneFixed)$ are presented in Appendix \ref{secdergen} and only depend on derivatives up to order $\dFit{i-1}(\dDataSuptm\supcomma\dtheta,\BoldFOneZeroImFixed)$. 
-Note that both $\dAit{1}$ and $\dBt$ are  written explicitly as a function of $\dFoneFixed$ since they depend on the non-stationary filtered sequence $\dFt(\dtheta,\dFoneFixed)$ initialized at $\dFoneFixed$.
+$\dBt(\dtheta,\dFoneFixed) = \dbeta + \dalpha\,  \partial  \fScaledScore(\dFt(\dtheta,\dFoneFixed),\dDatat; \dlambda) / \partial \dF$, and the expressions for $\dAit{1}(\dtheta,\dFoneFixed)$ are presented in Appendix \ref{secdergen}. Note that both $\dAit{1}$ and $\dBt$ are  written explicitly as a function of $\dFoneFixed$ since  depend on the non-stationary filtered sequence $\dFt(\dtheta,\dFoneFixed)$ initialized at $\dFoneFixed$.
 %
 %
 %{\color{red}\textbf{Andre says: why is the *linearity* so important? I do not see how the differentiated score is linear in $\dFt$ for example in the first derivative's recurrence equation.
@@ -1786,24 +1781,21 @@ Note that both $\dAit{1}$ and $\dBt$ are  written explicitly as a function of $\
 %
 %
 In contrast, we let $\dAit{1}(\dtheta)$ and $\dBt(\dtheta)$ denote the stationary counterparts of $\dAit{1}(\dtheta,\dFoneFixed)$ and $\dBt(\dtheta,\dFoneFixed)$, respectively,  that depend on the limit stationary filter $\dFt(\dtheta)$. 
-The recurrence convergence 	$|\phi_{t}(\bar{x}) - \tilde\phi_{t}(\bar{x})| \stackrel{e.a.s.}{\to} 0$ in \cite{smikosch2006} corresponds  here to  having  $|\dAit{1}(\dtheta,\dFoneFixed) - \dAit{1}(\dtheta)| \stackrel{e.a.s.}{\to} 0$ and $|\dBt(\dtheta,\dFoneFixed)-\dBt(\dtheta)| \stackrel{e.a.s.}{\to}0$. Both conditions are easily verified. Indeed, the expressions in Appendix \ref{secdergen} show that $\dAit{1}(\dtheta,\dFoneFixed)$ satisfies 
+The recurrence convergence 	$|\phi_{t}(\bar{x}) - \tilde\phi_{t}(\bar{x})| \stackrel{eas}{\to} 0$ in \cite{smikosch2006} corresponds  here to  having  $|\dAit{1}(\dtheta,\dFoneFixed) - \dAit{1}(\dtheta)| \stackrel{eas}{\to} 0$ and $|\dBt(\dtheta,\dFoneFixed)-\dBt(\dtheta)| \stackrel{eas}{\to}0$. Both conditions are easily verified. Indeed, the expressions in Appendix \ref{secdergen} show that $\dAit{1}(\dtheta,\dFoneFixed)$ satisfies 
 \begin{equation*}
 |\dAit{1}(\dtheta,\dFoneFixed) - \dAit{1}(\dtheta)| \leq \sup_{f}|\partial \dAit{1}(\dtheta)/\partial \dF | \cdot |\dFt(\dtheta,\dFoneFixed) - \dFt(\dtheta)| 
 \end{equation*}
-and hence we obtain $|\dAit{1}(\dtheta,\dFoneFixed) - \dAit{1}(\dtheta)| \stackrel{e.a.s.}{\to} 0$ by Lemma 2.1 in \cite{smikosch2006}  since $|\dFt(\dtheta,\dFoneFixed) - \dFt(\dtheta)| \stackrel{e.a.s.}{\to} 0$ by Proposition \ref{prop4} and  $\sup_{\dF}|\partial \dAit{1}(\dtheta)/\partial \dF |$ is SE with a logarithmic moment since 
-$\min\{\ns,\nsl,\msf,\mslf\}>0$. Similarly, we obtain 
+and hence we obtain $|\dAit{1}(\dtheta,\dFoneFixed) - \dAit{1}(\dtheta)| \stackrel{eas}{\to} 0$ by Lemma 2.1 in \cite{smikosch2006}  since $|\dFt(\dtheta,\dFoneFixed) - \dFt(\dtheta)| \stackrel{eas}{\to} 0$ by Proposition \ref{prop4} and  $\sup_{\dF}|\partial \dAit{1}(\dtheta)/\partial \dF |$ is SE with a logarithmic moment since $\min\{\ns,\nsl,\msf,\mslf\}>0$. Similarly, we obtain 
 \begin{equation*}
-|\dBt(\dtheta,\dFoneFixed)-\dBt(\dtheta)|\leq 	\sup_{\dF} |\partial \dBt(\dtheta) / \partial \dF | \cdot |\dFt(\dtheta,\dFoneFixed) - \dFt(\dtheta)| \stackrel{e.a.s.}{\to}0 \quad \text{as} \ t\to \infty,
+|\dBt(\dtheta,\dFoneFixed)-\dBt(\dtheta)|\leq 	\sup_{\dF} |\partial \dBt(\dtheta) / \partial \dF | \cdot |\dFt(\dtheta,\dFoneFixed) - \dFt(\dtheta)| \stackrel{eas}{\to}0 \quad \text{as} \ t\to \infty,
 \end{equation*}  
-since $\msff>0$ implies that $\sup_{\dF} |\partial \dBt(\dtheta) / \partial \dF |$ is SE with with a logarithmic moment, and  $|\dFt(\dtheta,\dFoneFixed) - \dFt(\dtheta)|$ vanishes e.a.s.
-%
-The convergence of the Lipschitz coefficients $\sup_{x}|\phi_t'(x)-\tilde \phi_t'(x)| = |\dBt(\dtheta,\dFoneFixed)-\dBt(\dtheta)|\stackrel{e.a.s.}{\to} 0$ follows trivially by the same argument.
+since $\msff>0$ implies that $\sup_{\dF} |\partial \dBt(\dtheta) / \partial \dF |$ is SE with with a logarithmic moment, and  $|\dFt(\dtheta,\dFoneFixed) - \dFt(\dtheta)|$ vanishes e.a.s..
 
-For the second derivative process, the same argument using 
-Lemma 2.1 in \cite{smikosch2006} applies sequentially. As the argument is slightly more subtle, 
-we prove it in Lemma~\ref{lastlemma} of the \SupplementaryAppendix.
-%We only need to consider $\dAit{2}(\dtheta)$ since  $\dBt(\dtheta,\dFoneFixed)$ does not depent on $i$.
-%Again using the expressions in Appendix \ref{secdergen}, we have $\sup_{\dFit{0:1}}|\partial \dAit{2}(\dtheta) / \partial \dFit{0:1}|$ is SE with a logarithmic moment, by virtue of the fact that $\ndFd>0$ and $\min\{\nsll,\msllf,\mslff,\msfff\}>0$ and $|\dFit{i}(\dDataSuptm\supcomma\dtheta,\BoldFOneZeroIFixed)- \dFit{i}(\dDataSuptm\supcomma\dtheta)| \stackrel{e.a.s.}{\to}0$. 
+The convergence of the Lipschitz coefficients $\sup_{x}|\phi'(x)-\tilde \phi'(x)| \stackrel{eas}{\to} 0$ is trivially satisfied since $\dBt(\dtheta,\dFoneFixed) = \dbeta + \dalpha\,  \partial  \fScaledScore(\dFt(\dtheta,\dFoneFixed),\dDatat; \dlambda) / \partial \dF$.
+
+The same argument applies sequentially to $\dAit{2}(\dtheta)$ since  $
+\sup_{\dFit{0:1}}|\partial \dAit{2}(\dtheta) / \partial \dFit{0:1}|$ is SE with a logarithmic moment, by virtue of the fact that $\ndFd>0$ and $\min\{\nsll,\msllf,\mslff,\msfff\}>0$, and also, since $|\dFit{i}(\dDataSuptm\supcomma\dtheta,\BoldFOneZeroIFixed)- \dFit{i}(\dDataSuptm\supcomma\dtheta)| \stackrel{eas}{\to}0$. 
+As $\dBt(\dtheta)$ does not depend on $i$, the contraction condition for the perturbed recurrence equation is identical to that of $\dFt$ itself.
 
 Finally, we note that the unperturbed recursions  satisfy the conditions of Proposition \ref{prop3}. In the notation of \cite{smikosch2006},  this means not only that the limit recursion $\tilde{\phi}_{t}$ is SE, but also, that its solution $\{\tilde x_{t}\}_{t \in \mathbb{Z}}$ has a logarithmic moment. The logarithmic moment is obtained below.
 %By the expression in Appendix \ref{secdergen}  of the technical appendix, we have
@@ -1831,13 +1823,8 @@ To establish the existence of moments for the derivative processes,
 we need to verify that conditions \textit{(iii.b)}--\textit{(v.b)} of Proposition \ref{prop3} hold. For the limit derivative processes, we can apply Proposition \ref{prop3} directly to the unperturbed system. For the derivative processes initialized at $t=1$, we notice that the moment bounds of Proposition \ref{prop3} can be obtained with non-stationary innovations (see Remark \ref{reminv22}) as long conditions \textit{(iii.b)}--\textit{(v.b)} hold uniformly in $t$. Below, we focus on the process generated by the unperturbed system.
 
 
-Inspection of the formula for  $\dAit{1}(\dtheta)$ reveals that $\dAit{1}(\dtheta)$  has  $\min \{\ndF\ ,\  \ns \ , \  \nsl \}$ 
-bounded moments and $\dAit{2}(\dtheta)$ has  $\ndFddfin$
-% = \min \Big\{\ndFd\ ,\  \nsll \ , \ \frac{\nsf \ndFd }{\nsf + \ndFd} \ , \ \frac{\nsff \ndFd }{2 \nsff + \ndFd} \ , \ \frac{ \nsfl \ndFd }{ \nsfl + \ndFd} \Big\}$ 
-moments as defined in Proposition~\ref{prop4new}. Inspection of the expression for $\dBt(\dtheta)$ reveals that $\dBt(\dtheta)$ has 
-%$\ndFfin>\ndF$ 
-$\nsf$
-moments. 
+Inspection of the formula for  $\dAit{1}(\dtheta)$ reveals that $\dAit{1}(\dtheta)$  has  $\ndFdfin = \min \big\{\ndF\ ,\  \ns \ , \  \nsl \big\}$ bounded moments and $\dAit{2}(\dtheta)$ has  $\ndFddfin = \min \Big\{\ndFd\ ,\  \nsll \ , \ \frac{\nsf \ndFd }{\nsf + \ndFd} \ , 
+   \ \frac{\nsff \ndFd }{2 \nsff + \ndFd} \ , \ \frac{ \nsfl \ndFd }{ \nsfl + \ndFd} \Big\}$ moments. Inspection of the expression for $\dBt(\dtheta)$ reveals that $\dBt(\dtheta)$ has $\ndFfin>\ndF$ moments. 
 
 Proposition~\ref{prop4new} implies that condition \textit{(iii.b)} in Proposition \ref{prop3} holds with $\ndFdfin$ moments for the first derivative process and $\ndFddfin$ moments for the second derivative process,  since, for any $n>0$, from
 the $C_{r}$-inequality in \cite[p.157]{loeve1977}, there exists a $0<c<\infty$ such that,
@@ -1859,12 +1846,10 @@ Condition \textit{(iv.b)} in Proposition \ref{prop3} holds with both $n=\ndFdfin
 \begin{equation*}
     \begin{split}
 &       \Ee \sup_{\dtheta \in \fTheta} 
-            |\dBt(\dtheta)|^{n} \leq
-       \Ee \sup_{\dtheta \in \fTheta} 
             \fLip_{1}^{n}(\dtheta) \leq
 \EXTRAPROOFSTEP{
     \\  &   \leq  
-\Ee   \sup_{\dtheta \in \fTheta} \sup_{(f,f') \in \mathcal{F} \times \mathcal{F} : f \neq f'} \frac{ | \dalpha (\fScaledScore(\dF,\dDatat; \dlambda)-\fScaledScore(\dF',\dDatat; \dlambda)) + \dbeta (\dF -\dF')|^{n}}{|\dF-\dF'|^{n}} \\
+\Ee   \sup_{\dtheta \in \fTheta} \sup_{(f,f') \in \mathcal{F} \times \mathcal{F} : f \neq f'} \frac{ | \dalpha (\fScaledScore(\dF,\dDatat; \dlambda)-\fScaledScore(\dF',\dDatat; \dlambda)) + \dbeta (\dF -\dF')|^{n}}{|\dF-\dF'|^{\ndF^{(i)}}} \\
 & = \Ee   \sup_{\dtheta \in \fTheta} \sup_{(f,f') \in \mathcal{F} \times \mathcal{F} : f \neq f'} \frac{  |\dalpha \fDeryt(\dFstar;\dlambda) (f - f')+ \dbeta (\dF -\dF')|^{n}}{|\dF-\dF'|^{n}}\\
 &    = 
 }
@@ -1906,7 +1891,7 @@ For a detailed proof, see \SupplementaryAppendix\ \ref{RemainingResults}.
 
 \proofskip
 \begin{proof}[Proof of Theorem \ref{theo2}]
-Following the classical consistency argument found 
+Following the classical consistency argument that is found 
 in for instance \citet[Theorem 3.4]{RePEc:cup:cbooks:9780521252805} or 
 \citet[Theorem 3.3]{galwhitbook},
 we obtain $\dthetahatT(\dFoneFixed) \stackrel{a.s.}{\to} \dthetaz$ from the uniform convergence of the criterion function
@@ -2132,7 +2117,7 @@ We have
     \end{split}
 \end{equation}
 The first term on the right-hand side of \eqref{ellppULLN} vanishes a.s.\ by application of Lemma 2.1 in \cite{smikosch2006} since  
-$\sup_{\dtheta \in \fTheta}\big\|(\dDatat,\BoldFt^{(0:2)}(\dDataSuptm\supcomma\dtheta,\dFzerotwoFixed)) - (\dDatat,\BoldFt^{(0:2)}(\dDataASuptm\supcomma\dtheta)) \big\| \stackrel{e.a.s.}{\to} 0 $ and  $\sup_{\dtheta \in \fTheta}\sup_{\dF}\|\LogLikT''(\dtheta)|$ has a logarithmic moment; see Lemma \ref{lem4.4.sub4} in \SupplementaryAppendix\ \ref{AppTechnicalLemmas}.
+$\sup_{\dtheta \in \fTheta}\big\|(\dDatat,\BoldFt^{(0:2)}(\dDataSuptm\supcomma\dtheta,\dFzerotwoFixed)) - (\dDatat,\BoldFt^{(0:2)}(\dDataASuptm\supcomma\dtheta) \big\| \stackrel{e.a.s.}{\to} 0 $ and  $\sup_{\dtheta \in \fTheta}\sup_{\dF}\|\LogLikT''(\dtheta)|$ has a logarithmic moment; see Lemma \ref{lem4.4.sub4} in \SupplementaryAppendix\ \ref{AppTechnicalLemmas}.
 
 The second term in \eqref{ellppULLN} converges under a bound  
 $\Ee \sup_{\dtheta \in \fTheta} \|\tLogLikt''(\dtheta)\|<\infty$
@@ -2183,4 +2168,4 @@ The desired result is obtained by applying Corollary \ref{cor1} to guarantee tha
 %\bibliographystyle{imsart-nameyear}
 \bibliographystyle{chicago}
 %\bibliographystyle{apalike}
-\bibliography{gasbib}
+\bibliography{gasbib2}
